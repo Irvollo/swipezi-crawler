@@ -46,7 +46,7 @@ function parsedSentences(sentences, order) {
 }
 
 function formTweet(sentences) {
-    let newTweet = "Test your Chinese!\nReorder the sentences in the correct order: \n\n";
+    var newTweet = "Test your Chinese!\nReorder the sentences in the correct order:\n";
     const hashtags = "\n#HSK #LearnChinese #LearnMandarin #ChineseLanguage #China"
     sentences.map((sentence, index) => {
         newTweet = newTweet +  `${index + 1}) ${sentence.hanziSentence}\n`
