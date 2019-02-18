@@ -1,3 +1,4 @@
+"use strict";
 const Nightmare = require('nightmare');
 const cheerio = require('cheerio');
 const Twit = require('twit');
@@ -46,7 +47,7 @@ function parsedSentences(sentences, order) {
 }
 
 function formTweet(sentences) {
-    var newTweet = "Test your Chinese!\nReorder the sentences in the correct order:\n";
+    let newTweet = "Test your Chinese!\nReorder the sentences in the correct order:\n";
     const hashtags = "\n#HSK #LearnChinese #LearnMandarin #ChineseLanguage #China"
     sentences.map((sentence, index) => {
         newTweet = newTweet +  `${index + 1}) ${sentence.hanziSentence}\n`
