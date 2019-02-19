@@ -106,7 +106,7 @@ nightmare
         const tweet = formTweet(randomizedSentences);
         const answer = formAnswer(randomizedSentences, order);
         console.log(tweet);
-        console.log(answer,);
+        console.log(answer);
         T.post('statuses/update', { status: tweet }, function(err, data, response) {
             if (!err) {
                 const twitId = data.id_str;
