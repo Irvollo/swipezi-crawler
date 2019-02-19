@@ -47,12 +47,23 @@ function parsedSentences(sentences, order) {
 }
 
 function formTweet(sentences) {
-    let newTweet = "Test your Chinese!\nReorder the sentences in the correct order:\n";
+    const options = ["A", "B", "C", "D", "E", "F", "G"]
+    let newTweet = "Test your Chinese!\nReorder the conversation in the correct order:\n";
     const hashtags = "\n#HSK #LearnChinese #LearnMandarin #ChineseLanguage #China"
     sentences.map((sentence, index) => {
-        newTweet = newTweet +  `${index + 1}) ${sentence.hanziSentence}\n`
+        newTweet = newTweet +  `${options[index]}) ${sentence.hanziSentence}\n`
     });
     return newTweet + hashtags;
+}
+
+function formAnswer(sentences, order){
+    const options = ["A", "B", "C", "D", "E", "F", "G"]
+    let newAnswer = "[Conversation Order]:\n\n";
+    sentences.map((sentence, index) => {
+        const currIndex = order[index];
+        newAnswer = newAnswer + `${options[currIndex]}) ${sentences[currIndex].englishSentence}\n`
+    })
+    return newAnswer;
 }
 
 const nightmare = Nightmare({show: true});
@@ -67,6 +78,7 @@ nightmare
     .goto(query)
     .wait(3000)
     .wait('body')
+    .wait(1500)
     .click('.btn_more')
     .wait(1000)
     .evaluate(() => document.querySelector('.dialogue.conver_lst').innerHTML) 
@@ -92,9 +104,23 @@ nightmare
     .then((order) => {
         const randomizedSentences = parsedSentences(sentenceList, order);
         const tweet = formTweet(randomizedSentences);
+        const answer = formAnswer(randomizedSentences, order);
+        console.log(tweet);
+        console.log(answer,);
         T.post('statuses/update', { status: tweet }, function(err, data, response) {
             if (!err) {
-               console.log('Success!') 
+                const twitId = data.id_str;
+                console.log('Trying to reply to: ', twitId);
+
+                setTimeout(() => {
+                    T.post('statuses/update', { status: answer, in_reply_to_status_id: twitId, auto_populate_reply_metadata: true }, function(err, data, response) {
+                        if (!err) {
+                                console.log('Success!');
+                        } else {
+                            console.log(err);
+                        }
+                    })
+                }, 2000)
             }
         })
     })
