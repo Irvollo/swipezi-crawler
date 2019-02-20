@@ -107,7 +107,7 @@ nightmare
         const answer = formAnswer(randomizedSentences, order);
         console.log(tweet);
         console.log(answer);
-        T.post('statuses/update', { status: tweet }, function(err, data, response) {
+        /*T.post('statuses/update', { status: tweet }, function(err, data, response) {
             if (!err) {
                 const twitId = data.id_str;
                 console.log('Trying to reply to: ', twitId);
@@ -122,7 +122,7 @@ nightmare
                     })
                 }, 2000)
             }
-        })
+        })*/
     })
     .catch(err => {
         console.log(err);
