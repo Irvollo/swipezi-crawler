@@ -32,7 +32,7 @@ function exerciseOrder(sentences) {
 
 function parseTweet(sentenceList, order) {
     const options = ["A", "B", "C", "D"];
-    const header = "Match the sentences!"
+    const header = "Match the Pinyin!"
     let hanziSentences = ""
     let pinyinSentences  = ""
     sentenceList.map((sentence, index) => {
@@ -44,8 +44,14 @@ function parseTweet(sentenceList, order) {
         pinyinSentences = pinyinSentences + `\n${index + 1}) ${randomAnswer}`;
     })
     
-    const tweet = `${header}\n${hanziSentences}\n${pinyinSentences}`;
-    return tweet;
+    const hashtags = "\n#Pinyin #Chinese #LearnChinese #China"
+    const tweet = `${header}\n${hanziSentences}\n${pinyinSentences}\n`;
+    const hashtagsTweet = tweet + hashtags;
+    if (hashtagsTweet.length >= 280) {
+        return tweet;
+    } else {
+        return hashtagsTweet;
+    }
 }
 
 function parseAnswer(senteceList, orderB) {

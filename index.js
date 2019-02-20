@@ -48,12 +48,17 @@ function parsedSentences(sentences, order) {
 
 function formTweet(sentences) {
     const options = ["A", "B", "C", "D", "E", "F", "G"]
-    let newTweet = "Test your Chinese!\nReorder the conversation in the correct order:\n";
-    const hashtags = "\n#HSK #LearnChinese #LearnMandarin #ChineseLanguage #China"
+    let tweet = "Test your Chinese!\nReorder the conversation in the correct order:\n";
+    const hashtags = "\n#Conversation #LearnChinese #Chinese #China"
     sentences.map((sentence, index) => {
-        newTweet = newTweet +  `${options[index]}) ${sentence.hanziSentence}\n`
+        tweet = tweet +  `${options[index]}) ${sentence.hanziSentence}\n`
     });
-    return newTweet + hashtags;
+    const hashtagsTweet = tweet + hashtags;
+    if (hashtagsTweet.length >= 280) {
+        return tweet;
+    } else {
+        return hashtagsTweet;
+    }
 }
 
 function formAnswer(sentences, order){
@@ -107,7 +112,7 @@ nightmare
         const answer = formAnswer(randomizedSentences, order);
         console.log(tweet);
         console.log(answer);
-        /*T.post('statuses/update', { status: tweet }, function(err, data, response) {
+        T.post('statuses/update', { status: tweet }, function(err, data, response) {
             if (!err) {
                 const twitId = data.id_str;
                 console.log('Trying to reply to: ', twitId);
@@ -122,7 +127,7 @@ nightmare
                     })
                 }, 2000)
             }
-        })*/
+        })
     })
     .catch(err => {
         console.log(err);

@@ -43,14 +43,20 @@ function parseTweet(sentenceList, order) {
         const randomAnswer = sentenceList[order[index]].hanziSentence;
         hanziSentences = hanziSentences + `\n${index + 1}) ${randomAnswer}`;
     })
-    
-    const tweet = `${header}\n${englishSentences}\n${hanziSentences}`;
-    return tweet;
+
+    const hashtags = "\n#Match #Chinese #LearnChinese #China"
+    const tweet = `${header}\n${englishSentences}\n${hanziSentences}\n`;
+    const hashtagsTweet = tweet + hashtags;
+    if (hashtagsTweet.length >= 280) {
+        return tweet;
+    } else {
+        return hashtagsTweet;
+    }
 }
 
 function parseAnswer(senteceList, orderB) {
     const options = ["A", "B", "C"];
-    let answers = "[Sentence Answer]:\n\n";
+    let answers = "[Match Sentence Answer]:\n\n";
     options.map((option, index) => {
         answers = answers + `${option}-${orderB[index] + 1} (${senteceList[index].pinyinSentence})\n`       
     });

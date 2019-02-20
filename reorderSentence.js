@@ -47,9 +47,16 @@ function parseTweet(english, sentence) {
     sentence.map((char, index) => {
         parsedSentence = parsedSentence + `${options[index]}) ${char} ${(index !== 0 && index % 4 === 0) ? '\n' : ''}`
     })
-
+    
+    const hashtags = "\n#Reorder #Chinese #LearnChinese #China"
     const tweet = `${header}\n\n[${english}]\n\n${parsedSentence}\n`;
-    return tweet;
+
+    const hashtagsTweet = tweet + hashtags;
+    if (hashtagsTweet.length >= 280) {
+        return tweet;
+    } else {
+        return hashtagsTweet;
+    }
 }
 
 function parseAnswer(sentence, order) {
