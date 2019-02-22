@@ -18,7 +18,7 @@ const config = {
 const T = new Twit(config.twitter);
 
 const word = randomWords();
-const nightmare = Nightmare({show: true});
+const nightmare = Nightmare({show: false});
 const query = `https://dict.naver.com/linedict/zhendict/#/cnen/example?query=${word}`;
 
 // orders
@@ -45,7 +45,7 @@ function parseTweet(sentenceList, order) {
     })
 
     const hashtags = "\n#Match #Chinese #LearnChinese #China"
-    const tweet = `${header}\n${englishSentences}\n${hanziSentences}\n`;
+    const tweet = `${header}\n${hanziSentences}\n${englishSentences}\n`;
     const hashtagsTweet = tweet + hashtags;
     if (hashtagsTweet.length >= 280) {
         return tweet;
@@ -57,8 +57,9 @@ function parseTweet(sentenceList, order) {
 function parseAnswer(senteceList, orderB) {
     const options = ["A", "B", "C"];
     let answers = "[Match Sentence Answer]:\n\n";
-    options.map((option, index) => {
-        answers = answers + `${option}-${orderB[index] + 1} (${senteceList[index].pinyinSentence})\n`       
+    console.log(orderB)
+    senteceList.map((sentence, index) => {
+        answers = answers + `${index + 1}-${options[orderB[index]]} (${sentenceList[orderB[index]].pinyinSentence})\n`       
     });
     return answers;
 } 
