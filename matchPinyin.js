@@ -45,7 +45,7 @@ function parseTweet(sentenceList, order) {
     })
     
     const hashtags = "\n#Pinyin #Chinese #LearnChinese #China"
-    const tweet = `${header}\n${hanziSentences}\n${pinyinSentences}\n`;
+    const tweet = `${header}\n${pinyinSentences}\n${hanziSentences}\n`;
     const hashtagsTweet = tweet + hashtags;
     if (hashtagsTweet.length >= 280) {
         return tweet;
@@ -57,8 +57,10 @@ function parseTweet(sentenceList, order) {
 function parseAnswer(senteceList, orderB) {
     const options = ["A", "B", "C"];
     let answers = "[Pinyin Answer]:\n\n";
-    options.map((option, index) => {
-        answers = answers + `${option}-${orderB[index] + 1} (${senteceList[index].englishSentence})\n`       
+    console.log(orderB);
+    senteceList.map((sentence, index) => {
+        // answers = answers + `${index +1}-${orderB[index] + 1} (${senteceList[index].englishSentence})\n`   
+        answers = answers + `${index + 1 }-${options[orderB[index]]} (${sentence.englishSentence})\n`
     });
     return answers;
 } 
@@ -101,7 +103,7 @@ nightmare
         const answer = parseAnswer(sentencesUsed, senteceOrder);
         console.log(tweet);
         console.log(answer);
-        T.post('statuses/update', { status: tweet }, function(err, data, response) {
+        /* T.post('statuses/update', { status: tweet }, function(err, data, response) {
             if (!err) {
                 const twitId = data.id_str;
                 console.log('Trying to reply to: ', twitId);
@@ -116,5 +118,5 @@ nightmare
                     })
                 }, 2000)
             }
-        })
+        }) */
     })
