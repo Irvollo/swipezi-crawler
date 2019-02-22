@@ -59,14 +59,16 @@ function parseTweet(english, sentence) {
     }
 }
 
-function parseAnswer(sentence, order) {
-    const options = ["A", "B", "C","D","E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
+function parseAnswer(sentence, pinyin, reorderedSentence) {
+    const options = ["A", "B", "C","D","E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "K", "R", "S"];
     let answers = "[Order Sentence Answer]:\n\n";
-    console.log(order);
-    order.map((orderIndex, index) => {
-        answers = answers + `${options[order[index]]}(${sentence.hanziSentenceOrdered[index]})${index + 1 === order.length ? "" : "-"}` 
+    let optionOder = "";
+    sentence.map((char, index) => {
+        const randomIndex = reorderedSentence.indexOf(char);
+        answers = answers + `${char}`
+        optionOder = optionOder + `${options[randomIndex]}${index + 1 === sentence.length ? "" : "-"}`
     });
-    return `${answers}\n${sentence.pinyinSentence}`;
+    return `${answers}\n${optionOder}\n\n${pinyin}`;
 } 
 
 
@@ -104,7 +106,7 @@ nightmare
         const randomOrder = exerciseOrder(randomSentence.hanziSentenceOrdered);
         const reorderedSentence = reorderSentence(randomOrder, randomSentence.hanziSentenceOrdered);
         const tweet = parseTweet(randomSentence.englishSentence, reorderedSentence);
-        const answer = parseAnswer(randomSentence, randomOrder);
+        const answer = parseAnswer(randomSentence.hanziSentenceOrdered, randomSentence.pinyinSentence, reorderedSentence);
         console.log(tweet);
         console.log(answer);
         T.post('statuses/update', { status: tweet }, function(err, data, response) {
