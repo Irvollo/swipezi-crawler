@@ -62,8 +62,9 @@ function parseTweet(english, sentence) {
 function parseAnswer(sentence, order) {
     const options = ["A", "B", "C","D","E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
     let answers = "[Order Sentence Answer]:\n\n";
+    console.log(order);
     order.map((orderIndex, index) => {
-        answers = answers + `${options[orderIndex]}(${sentence.hanziSentenceOrdered[index]})${index + 1 === order.length ? "" : "-"}` 
+        answers = answers + `${options[order[index]]}(${sentence.hanziSentenceOrdered[index]})${index + 1 === order.length ? "" : "-"}` 
     });
     return `${answers}\n${sentence.pinyinSentence}`;
 } 
@@ -106,7 +107,7 @@ nightmare
         const answer = parseAnswer(randomSentence, randomOrder);
         console.log(tweet);
         console.log(answer);
-        T.post('statuses/update', { status: tweet }, function(err, data, response) {
+        /* T.post('statuses/update', { status: tweet }, function(err, data, response) {
             if (!err) {
                 const twitId = data.id_str;
                 console.log('Trying to reply to: ', twitId);
@@ -121,5 +122,5 @@ nightmare
                     })
                 }, 2000)
             }
-        })
+        }) */
     })
